@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Comment To Details</string>
+    <!-- description -->
+    <string name="app_desc">Comment To Details</string>
+    <string name="save">Save</string>
+    <string name="comment">Comment</string>
+    <string name="preferences_name">Comment To Detail Preferences</string>
+    <string name="preferences_description">Comment To Details Plugin Preferences</string>
+
+</resources>
