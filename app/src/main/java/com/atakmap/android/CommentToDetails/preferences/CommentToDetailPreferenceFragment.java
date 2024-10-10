@@ -1,6 +1,6 @@
 package com.atakmap.android.CommentToDetails.preferences;
 
-import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferences.MDM_COMMENT;
+import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferences.INIT_COMMENT;
 import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferences.USER_COMMENT;
 import static com.atakmap.android.CommentToDetails.services.CommentDetailsUpdater.updateSelfMarkerCommentDetails;
 
@@ -37,7 +37,7 @@ public class CommentToDetailPreferenceFragment extends PluginPreferenceFragment 
         super.onCreate(savedInstanceState);
 
         PanEditTextPreference userComment = (PanEditTextPreference) findPreference(USER_COMMENT);
-        PanEditTextPreference mdmComment = (PanEditTextPreference) findPreference(MDM_COMMENT);
+        PanEditTextPreference mdmComment = (PanEditTextPreference) findPreference(INIT_COMMENT);
 
         userComment.setOnPreferenceChangeListener((preference, newValue) -> updateComment((String) newValue));
         mdmComment.setOnPreferenceChangeListener((preference, newValue) -> updateComment((String) newValue));

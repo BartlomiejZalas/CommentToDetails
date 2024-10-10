@@ -1,7 +1,5 @@
 package com.atakmap.android.CommentToDetails;
 
-import static android.widget.Toast.makeText;
-import static com.atakmap.android.CommentToDetails.comment.CommentCodHandler.DETAILS_META_KEY_COMMENT;
 import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferencesResolver.resolveComment;
 import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferencesResolver.updateCommentPreferences;
 import static com.atakmap.android.CommentToDetails.services.CommentDetailsUpdater.updateSelfMarkerCommentDetails;

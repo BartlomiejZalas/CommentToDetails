@@ -4,8 +4,6 @@ import static android.text.TextUtils.isEmpty;
 import static com.atakmap.android.CommentToDetails.comment.CommentCodHandler.DETAILS_META_KEY_COMMENT;
 import static com.atakmap.android.maps.MapView.getMapView;
 
-import android.graphics.Typeface;
-
 import com.atakmap.android.maps.MapItem;
 import com.atakmap.android.widgets.LinearLayoutWidget;
 import com.atakmap.android.widgets.RootLayoutWidget;

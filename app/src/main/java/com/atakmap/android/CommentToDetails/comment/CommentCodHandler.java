@@ -11,10 +11,9 @@ import com.atakmap.coremap.cot.event.CotDetail;
 import com.atakmap.coremap.cot.event.CotEvent;
 
 public class CommentCodHandler extends CotDetailHandler {
-    public static final String TAG = "CommentToDetailsCotHandler";
 
     public static final String COMMENT_COD_KEY = "COMMENT_COD_KEY";
-    public static final String DETAILS_META_KEY_COMMENT = "com.atakmap.coremap.filesystem.FileSystemUtils.DETAILS_META_KEY_COMMENT";
+    public static final String DETAILS_META_KEY_COMMENT = "om.atakmap.android.CommentToDetails.SELF_REMARKS";
 
     public CommentCodHandler() {
         super(COMMENT_COD_KEY);
