@@ -67,7 +67,7 @@ public class CommentToDetailsComponent extends DropDownMapComponent {
     }
 
     private void registerExtendedDetails(Context context, MapView view) {
-        extendedUserDetails = new ExtendedUserDetails(context, view.getContext());
+        extendedUserDetails = new ExtendedUserDetails(context, view.getContext(), cotHandler);
         ContactLocationView.register(extendedUserDetails);
     }
 
