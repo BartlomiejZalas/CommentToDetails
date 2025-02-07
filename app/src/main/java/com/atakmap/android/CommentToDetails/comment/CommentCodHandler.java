@@ -2,8 +2,6 @@ package com.atakmap.android.CommentToDetails.comment;
 
 import static com.atakmap.coremap.filesystem.FileSystemUtils.isEmpty;
 
-import android.util.Log;
-
 import com.atakmap.android.cot.detail.CotDetailHandler;
 import com.atakmap.android.maps.MapItem;
 import com.atakmap.comms.CommsMapComponent;
@@ -13,7 +11,7 @@ import com.atakmap.coremap.cot.event.CotEvent;
 public class CommentCodHandler extends CotDetailHandler {
 
     public static final String COMMENT_COD_KEY = "COMMENT_COD_KEY";
-    public static final String DETAILS_META_KEY_COMMENT = "om.atakmap.android.CommentToDetails.SELF_REMARKS";
+    public static final String DETAILS_META_KEY_COMMENT = "com.atakmap.android.CommentToDetails.SELF_REMARKS";
 
     public CommentCodHandler() {
         super(COMMENT_COD_KEY);

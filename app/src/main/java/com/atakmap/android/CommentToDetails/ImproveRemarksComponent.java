@@ -1,18 +1,17 @@
 package com.atakmap.android.CommentToDetails;
 
-import static com.atakmap.android.CommentToDetails.comment.CommentCodHandler.DETAILS_META_KEY_COMMENT;
-import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferences.PREFERENCES_KEYS;
-import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferencesResolver.resolveComment;
-import static com.atakmap.android.CommentToDetails.services.CommentDetailsUpdater.updateSelfMarkerCommentDetails;
+import static com.atakmap.android.CommentToDetails.TextWidgetActionReceiver.TextResolver;
+import static com.atakmap.android.imagecapture.CapturePrefs.getPrefs;
+import static com.atakmap.android.maps.MapView.getMapView;
+import static com.atakmap.android.util.ATAKUtilities.isSelf;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.atakmap.android.CommentToDetails.comment.CommentCodHandler;
-import com.atakmap.android.CommentToDetails.ui.ExtendedUserDetails;
 import com.atakmap.android.CommentToDetails.plugin.R;
-import com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferenceFragment;
+import com.atakmap.android.CommentToDetails.ui.ExtendedUserDetailsForNativeRemarks;
 import com.atakmap.android.CommentToDetails.ui.TextWidgetDisplayer;
 import com.atakmap.android.contact.ContactLocationView;
 import com.atakmap.android.cot.detail.CotDetailManager;
@@ -20,14 +19,14 @@ import com.atakmap.android.dropdown.DropDownMapComponent;
 import com.atakmap.android.ipc.AtakBroadcast;
 import com.atakmap.android.ipc.AtakBroadcast.DocumentedIntentFilter;
 import com.atakmap.android.maps.MapView;
-import com.atakmap.app.preferences.ToolsPreferenceFragment;
+import com.atakmap.android.maps.PointMapItem;
 
 
-public class CommentToDetailsComponent extends DropDownMapComponent {
+public class ImproveRemarksComponent extends DropDownMapComponent {
 
     private static final String TAG = "CommentToDetails";
     private CommentCodHandler cotHandler;
-    private ExtendedUserDetails extendedUserDetails;
+    private ExtendedUserDetailsForNativeRemarks extendedUserDetails;
     private TextWidgetActionReceiver textWidgetActionReceiver;
 
     @Override
@@ -38,30 +37,13 @@ public class CommentToDetailsComponent extends DropDownMapComponent {
     public void onCreate(final Context context, Intent intent, final MapView view) {
         context.setTheme(R.style.ATAKPluginTheme);
         registerCotHandler();
-        registerExtendedDetails(context, view);
-        registerPreferences(context);
-        updateCommentFromPreferences();
+        registerExtendedDetails(view);
         registerTextWidgetActions();
-        TextWidgetDisplayer.registerWidget();
     }
 
-    private void updateCommentFromPreferences() {
-        updateSelfMarkerCommentDetails(cotHandler, resolveComment());
-    }
 
-    private void registerPreferences(Context context) {
-        ToolsPreferenceFragment.register(
-                new ToolsPreferenceFragment.ToolPreference(
-                        context.getResources().getString(R.string.preferences_name),
-                        context.getResources().getString(R.string.preferences_description),
-                        PREFERENCES_KEYS,
-                        context.getResources().getDrawable(R.drawable.logo, null),
-                        new CommentToDetailPreferenceFragment(context))
-        );
-    }
-
-    private void registerExtendedDetails(Context context, MapView view) {
-        extendedUserDetails = new ExtendedUserDetails(context, view.getContext(), cotHandler);
+    private void registerExtendedDetails(MapView view) {
+        extendedUserDetails = new ExtendedUserDetailsForNativeRemarks(view.getContext());
         ContactLocationView.register(extendedUserDetails);
     }
 
@@ -70,11 +52,14 @@ public class CommentToDetailsComponent extends DropDownMapComponent {
         CotDetailManager.getInstance().registerHandler(cotHandler);
     }
 
+
     private void registerTextWidgetActions() {
         DocumentedIntentFilter showFilter = new DocumentedIntentFilter();
         showFilter.addAction("com.atakmap.android.maps.SHOW_DETAILS");
-        textWidgetActionReceiver = new TextWidgetActionReceiver(i -> i.getMetaString(DETAILS_META_KEY_COMMENT, null));
+        TextResolver resolveRemarks = i -> isSelf(getMapView(), (PointMapItem) i) ? getPrefs().getString("userRemarks", "").trim() : i.getRemarks();
+        textWidgetActionReceiver = new TextWidgetActionReceiver(resolveRemarks);
         AtakBroadcast.getInstance().registerReceiver(textWidgetActionReceiver, showFilter);
+        TextWidgetDisplayer.registerWidget();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.atakmap.android.CommentToDetails.comment;
+package com.atakmap.android.CommentToDetails.ui;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.widget.LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -6,6 +6,10 @@ import static com.atakmap.android.CommentToDetails.comment.CommentCodHandler.DET
 import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferencesResolver.resolveComment;
 import static com.atakmap.android.CommentToDetails.preferences.CommentToDetailPreferencesResolver.updateCommentPreferences;
 import static com.atakmap.android.CommentToDetails.services.CommentDetailsUpdater.updateSelfMarkerCommentDetails;
+import static com.atakmap.android.util.ATAKConstants.getFullVersionName;
+import static com.atakmap.android.util.ATAKConstants.getVersionBrand;
+import static com.atakmap.android.util.ATAKConstants.getVersionCode;
+import static com.atakmap.android.util.ATAKConstants.getVersionName;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,6 +25,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.atakmap.android.CommentToDetails.comment.CommentCodHandler;
 import com.atakmap.android.CommentToDetails.plugin.R;
 import com.atakmap.android.contact.ContactLocationView;
 import com.atakmap.android.cotdetails.ExtendedInfoView;
@@ -86,14 +91,10 @@ public class ExtendedUserDetails implements ContactLocationView.ExtendedSelfInfo
 
                 this.addView(container);
 
-                Log.d(TAG, "Coś się dzieje");
-
                 String comment = m.getMetaString(DETAILS_META_KEY_COMMENT, null);
 
                 if (comment != null) {
-                    Log.d(TAG, "Comment from meta:" + comment);
                     String convertedCommentString = comment.replace("<BR>", "\n");
-                    Log.d(TAG, "Comment to display:" + convertedCommentString);
                     hrValue.setText(convertedCommentString);
                 }
             }
