@@ -66,6 +66,7 @@ public class ImproveRemarksComponent extends DropDownMapComponent {
     protected void onDestroyImpl(Context context, MapView view) {
         Log.d(TAG, "onDestroyImpl");
         CotDetailManager.getInstance().unregisterHandler(cotHandler);
+        extendedUserDetails.cleanup();
         ContactLocationView.unregister(extendedUserDetails);
         AtakBroadcast.getInstance().unregisterReceiver(textWidgetActionReceiver);
         TextWidgetDisplayer.unregisterWidget();
