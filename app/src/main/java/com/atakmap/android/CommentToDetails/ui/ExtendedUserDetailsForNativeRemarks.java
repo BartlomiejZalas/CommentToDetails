@@ -1,6 +1,7 @@
 package com.atakmap.android.CommentToDetails.ui;
 
 import static com.atakmap.android.imagecapture.CapturePrefs.getPrefs;
+import static com.atakmap.android.maps.MapView.getMapView;
 
 import android.content.Context;
 import android.text.Editable;
@@ -12,12 +13,16 @@ import androidx.viewpager.widget.ViewPager;
 import com.atakmap.android.contact.ContactLocationView;
 import com.atakmap.android.contact.ContactProfileView;
 import com.atakmap.android.cotdetails.ExtendedInfoView;
+import com.atakmap.android.hashtags.HashtagManager;
+import com.atakmap.android.hashtags.util.HashtagUtils;
 import com.atakmap.android.hashtags.view.RemarksLayout;
+import com.atakmap.android.maps.Marker;
 import com.atakmap.android.maps.PointMapItem;
 import com.atakmap.android.util.AfterTextChangedWatcher;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public class ExtendedUserDetailsForNativeRemarks implements ContactLocationView.ExtendedSelfInfoFactory {
 
@@ -25,8 +30,15 @@ public class ExtendedUserDetailsForNativeRemarks implements ContactLocationView.
     private final AfterTextChangedWatcher watcher = new AfterTextChangedWatcher() {
         @Override
         public void afterTextChanged(Editable s) {
-            getPrefs().edit().putString("userRemarks", s.toString().trim()).apply();
-            Log.d(TAG, "userRemarks saved");
+            String newRemarks = s.toString().trim();
+            getPrefs().edit().putString("userRemarks", newRemarks).apply();
+            Log.d(TAG, "userRemarks prefs saved");
+
+            Marker selfMarker = getMapView().getSelfMarker();
+            List<String> newTags = HashtagUtils.extractTags(newRemarks);
+            HashtagManager.getInstance().updateContent(selfMarker, newTags);
+            selfMarker.setHashtags(newTags);
+            Log.d(TAG, "userRemarks hashtags saved");
         }
     };
     private RemarksLayout remarksLayout;
