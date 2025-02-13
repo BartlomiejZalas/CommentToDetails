@@ -80,6 +80,7 @@ public class ExtendedUserDetailsForNativeRemarks implements ContactLocationView.
     }
 
     public void cleanup() {
-        remarksLayout.removeTextChangedListener(watcher);
+        if (remarksLayout != null)
+            remarksLayout.removeTextChangedListener(watcher);
     }
 }
